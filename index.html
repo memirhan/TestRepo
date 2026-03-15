@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XSS Demo</title>
+</head>
+<body>
+
+<h2>Arama</h2>
+
+<form method="GET">
+    <input type="text" name="q" placeholder="Bir şey yaz">
+    <button type="submit">Ara</button>
+</form>
+
+<p>Arama sonucu:</p>
+
+<div id="result"></div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const query = params.get("q");
+
+if(query){
+    // ❌ XSS açığı: kullanıcı girdisi direkt HTML'e basılıyor
+    document.getElementById("result").innerHTML = "Sonuç: " + query;
+}
+</script>
+
+</body>
+</html>
