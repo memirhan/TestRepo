@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>XSS Demo Testt</title>
+    <title>XSS Demo Test</title>
 </head>
 <body>
 
-<h2>Arama</h2>
+<h2>Arama (Reflected XSS)</h2>
 
 <form method="GET">
     <input type="text" name="q" placeholder="Bir şey yaz">
@@ -13,17 +13,52 @@
 </form>
 
 <p>Arama sonucu:</p>
-
 <div id="result"></div>
+
+<hr>
+
+<h2>Yorum Ekle (Stored XSS)</h2>
+
+<input type="text" id="commentInput" placeholder="Yorum yaz">
+<button onclick="addComment()">Gönder</button>
+
+<h3>Yorumlar</h3>
+<div id="comments"></div>
 
 <script>
 const params = new URLSearchParams(window.location.search);
 const query = params.get("q");
 
 if(query){
-    // ❌ XSS açığı: kullanıcı girdisi direkt HTML'e basılıyor
+    // ❌ Reflected XSS
     document.getElementById("result").innerHTML = "Sonuç: " + query;
 }
+
+// ❌ Stored XSS (localStorage ile)
+function addComment(){
+    const input = document.getElementById("commentInput").value;
+
+    let comments = JSON.parse(localStorage.getItem("comments")) || [];
+    comments.push(input);
+
+    localStorage.setItem("comments", JSON.stringify(comments));
+
+    loadComments();
+}
+
+function loadComments(){
+    const comments = JSON.parse(localStorage.getItem("comments")) || [];
+    const container = document.getElementById("comments");
+
+    container.innerHTML = "";
+
+    comments.forEach(c => {
+        // ❌ XSS açığı
+        container.innerHTML += "<p>" + c + "</p>";
+    });
+}
+
+loadComments();
 </script>
 
 </body>
