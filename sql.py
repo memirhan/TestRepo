@@ -8,6 +8,9 @@ $query2 = "SELECT * FROM users WHERE username = '$username' AND password = '$pas
 $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 
+$query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+$query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
