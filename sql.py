@@ -4,8 +4,6 @@ $conn = new mysqli("localhost", "root", "", "testdb");
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-$query2 = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
-$query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
 
 $result = $conn->query($query);
