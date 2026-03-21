@@ -1,22 +1,16 @@
-<?php
-$conn = new mysqli("localhost", "root", "", "testdb");
+import sqlite3
 
-$username = $_POST['username'];
-$password = $_POST['password'];
+conn = sqlite3.connect("users.db")
+cursor = conn.cursor()
 
-$query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+username = input("Username: ")
+password = input("Password: ")
 
-$result = $conn->query($query);
+cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
 
-if ($result->num_rows > 0) {
-    echo "Login başarılı";
-} else {
-    echo "Login başarısız";
-}
-?>
+user = cursor.fetchone()
 
-<form method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <button type="submit">Login</button>
-</form>
+if user:
+    print("Login successful")
+else:
+    print("Invalid credentials")
