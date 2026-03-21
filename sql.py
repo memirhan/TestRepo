@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect("users.db")
+conn = sqlite3.connect("userss.db")
 cursor = conn.cursor()
 
 username = input("Username: ")
