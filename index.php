@@ -1,20 +1,24 @@
-import sqlite3
-import bcrypt
+<?php
+// Veritabanı bağlantısı
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "test_db";
 
-conn = sqlite3.connect("users.db")
-cursor = conn.cursor()
+$conn = mysqli_connect($host, $username, $password, $database);
 
-username = input("Username: ")
-password = input("Password: ")
+// Kullanıcı girdisini doğrudan sorguya ekleme - ÇOK TEHLİKELİ!
+$kullanici_adi = $_POST['username'];
+$sifre = $_POST['password'];
 
-cursor.execute("SELECT password_hash FROM users WHERE username=?", (username,))
-result = cursor.fetchone()
+// Güvensiz sorgu
+$query = "SELECT * FROM kullanicilar WHERE username = '$kullanici_adi' AND password = '$sifre'";
 
-if result:
-    stored_hashed_password = result[0].encode('utf-8')
-    if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password):
-        print("Login successful")
-    else:
-        print("Invalid credentials")
-else:
-    print("Invalid credentials")
+$result = mysqli_query($conn, $query);
+
+if(mysqli_num_rows($result) > 0) {
+    echo "Giriş başarılı!";
+} else {
+    echo "Hatalı kullanıcı adı veya şifre!";
+}
+?>
