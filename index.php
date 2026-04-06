@@ -2,6 +2,6 @@
 // Kullanıcıdan veri al
 $input = $_GET['q'];
 
-// Direkt ekrana bas (XSS açığı!)
-echo "Arama sonucu: " . $input;
+// Çıktıyı HTML özel karakterlerden kaçırarak ekrana bas
+echo "Arama sonucu: " . htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
 ?>
