@@ -1,16 +1,24 @@
-import sqlite3
+<?php
+// Veritabanı bağlantısı
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "test_db";
 
-conn = sqlite3.connect("users.db")
-cursor = conn.cursor()
+$conn = mysqli_connect($host, $username, $password, $database);
 
-username = input("Username: ")
-password = input("Password: ")
+// Kullanıcı girdisini doğrudan sorguya ekleme - ÇOK TEHLİKELİ!
+$kullanici_adi = $_POST['username'];
+$sifre = $_POST['password'];
 
-cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+// Güvensiz sorgu
+$query = "SELECT * FROM kullanicilar WHERE username = '$kullanici_adi' AND password = '$sifre'";
 
-user = cursor.fetchone()
+$result = mysqli_query($conn, $query);
 
-if user:
-    print("Login successful")
-else:
-    print("Invalid credentials")
+if(mysqli_num_rows($result) > 0) {
+    echo "Giriş başarılı!";
+} else {
+    echo "Hatalı kullanıcı adı veya şifre!";
+}
+?>
