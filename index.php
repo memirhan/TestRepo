@@ -1,7 +1,12 @@
-<?php
-// Kullanıcıdan veri al
-$input = $_GET['q'];
+const express = require("express");
+const app = express();
 
-// Çıktıyı HTML özel karakterlerden kaçırarak ekrana bas
-echo "Arama sonucu: " . htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
-?>
+app.get("/", (req, res) => {
+  const name = req.query.name;
+
+  res.send(`
+    <h1>Merhaba ${name}</h1>
+  `);
+});
+
+app.listen(3000);
