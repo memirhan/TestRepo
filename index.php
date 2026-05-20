@@ -1,25 +1,19 @@
-const express = require("express");
-const app = express();
+import mysql from "mysql2/promise";
 
-// Helper function to escape HTML special characters
-function escapeHtml(unsafe) {
-  if (!unsafe) return '';
-  return unsafe
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-app.get("/", (req, res) => {
-  const name = req.query.name;
-  // Escape the name before embedding it into HTML to prevent XSS
-  const safeName = escapeHtml(name || 'Guest');
-
-  res.send(`
-    <h1>Merhaba ${safeName}</h1>
-  `);
+const db = await mysql.createConnection({
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
 });
 
-app.listen(3000);
+const username = process.env.APP_USERNAME || "admin";
+const password = process.env.APP_PASSWORD || "1234";
+
+// SAFE: SQL injection engellenmiş
+const [rows] = await db.execute(
+  "SELECT * FROM users WHERE username = ? AND password = ?",
+  [username, password]
+);
+
+console.log(rows);
