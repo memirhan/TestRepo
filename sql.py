@@ -1,16 +1,19 @@
-import sqlite3
+import mysql from "mysql2/promise";
 
-conn = sqlite3.connect("users.db")
-cursor = conn.cursor()
+const db = await mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "testdb"
+});
 
-username = input("Username: ")
-password = input("Password: ")
+const username = "admin";
+const password = "1234";
 
-cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+// SAFE: SQL injection engellenmiş
+const [rows] = await db.execute(
+  "SELECT * FROM users WHERE username = ? AND password = ?",
+  [username, password]
+);
 
-user = cursor.fetchone()
-
-if user:
-    print("Login successful")
-else:
-    print("Invalid credentials")
+console.log(rows);
