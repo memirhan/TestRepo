@@ -3,4 +3,4 @@
 
 $name = $_GET['name'] ?? '';
 
-echo "<h1>Merhaba $name</h1>";
+echo "<h1>Merhaba $name</h2>";
