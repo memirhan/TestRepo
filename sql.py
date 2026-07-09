@@ -16,9 +16,10 @@
         function addComment() {
             const input = document.getElementById("comment").value;
 
-            // ❌ Güvensiz: Kullanıcı girdisi doğrudan HTML olarak ekleniyor.
-            document.getElementById("comments").innerHTML +=
-                "<p>" + input + "</p>";
+            const commentsDiv = document.getElementById("comments");
+            const pElement = document.createElement("p");
+            pElement.textContent = input; // Güvenli: Kullanıcı girdisi güvenli bir şekilde metin olarak ekleniyor.
+            commentsDiv.appendChild(pElement);
         }
     </script>
 
