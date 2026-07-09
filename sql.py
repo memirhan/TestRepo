@@ -1,19 +1,27 @@
-import mysql from "mysql2/promise";
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XSS Demo</title>
+</head>
+<body>
 
-const db = await mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password",
-  database: "testdb"
-});
+    <h2>Yorum Sistemi</h2>
 
-const username = "admin";
-const password = "1234";
+    <input type="text" id="comment" placeholder="Yorum yaz">
+    <button onclick="addComment()">Gönder</button>
 
-// SAFE: SQL injection engellenmiş
-const [rows] = await db.execute(
-  "SELECT * FROM users WHERE username = ? AND password = ?",
-  [username, password]
-);
+    <div id="comments"></div>
 
-console.log(rows);
+    <script>
+        function addComment() {
+            const input = document.getElementById("comment").value;
+
+            const commentsDiv = document.getElementById("comments");
+            const pElement = document.createElement("p");
+            pElement.textContent = input; // Güvenli: Kullanıcı girdisi güvenli bir şekilde metin olarak ekleniyor.
+            commentsDiv.appendChild(pElement);
+        }
+    </script>
+
+</body>
+</html>
