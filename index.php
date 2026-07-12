@@ -8,7 +8,7 @@
     <h2>Yorum Sistemi</h2>
 
     <input type="text" id="comment" placeholder="Yorum sssyaz">
-    <button onclick="addComment()">Gönsssder</button>
+    <button onclick="addComment()">Gönsssfssder</button>
 
     <div id="comments"></div>
 
